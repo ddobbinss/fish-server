@@ -1,0 +1,15 @@
+:root {
+    --text-teal:#B4C4D9;
+    --seagreen1:#013A40;
+    --seagreen2:#01403A;
+    --seagreen3:#025949;
+    --seagreen4:#027353;
+}
+
+body {
+    background:var(--seagreen2);
+}
+
+h1 {
+    color:var(--text-teal)
+}
