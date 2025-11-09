@@ -101,7 +101,7 @@ const fishes = [
 ];
 
 
-app.get("/api/fish", (req, res) => {
+app.get("/api/fishes", (req, res) => {
     console.log("Fish Requested");
     res.send(fishes);
 }); 
