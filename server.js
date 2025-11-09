@@ -112,7 +112,6 @@ app.get("/api/fish/:id", (req, res) => {
     res.send(fish);
 });
 
-
-const PORT = process.env.PORT || 3001;
-
-app.listen(PORT, '0.0.0.0', () => console.log(`Running on port ${PORT}`));
+app.listen(3001, () => {
+    console.log("Server is up and running");
+});
