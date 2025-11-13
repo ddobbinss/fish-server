@@ -35,7 +35,7 @@ const fishes = [
         "region": "saltwater",
         "length_cm": "8 cm",
         "price": "35.00",
-        "info": "The Royal Gramma is a hardy and vividly colored reef fish featuring a purple-to-yellow gradient body. It’s peaceful, easy to care for, and perfect for beginner saltwater hobbyists.",
+        "description": "The Royal Gramma is a hardy and vividly colored reef fish featuring a purple-to-yellow gradient body. It’s peaceful, easy to care for, and perfect for beginner saltwater hobbyists.",
         "image": "images/royal-gramma.png"
     },
     {
@@ -45,7 +45,7 @@ const fishes = [
         "region": "saltwater",
         "length_cm": "7 cm",
         "price": "80.00",
-        "info": "The Mandarin Dragonet is prized for its psychedelic blue, green, and orange patterns. It is peaceful and small but requires a well-established tank with plenty of live copepods.",
+        "description": "The Mandarin Dragonet is prized for its psychedelic blue, green, and orange patterns. It is peaceful and small but requires a well-established tank with plenty of live copepods.",
         "image": "images/mandarin-dragonet.png"
     },
     {
@@ -55,7 +55,7 @@ const fishes = [
         "region": "freshwater",
         "length_cm": "6 cm",
         "price": "25.00",
-        "info": "The Electric Blue Ram is a striking freshwater cichlid known for its iridescent blue body and peaceful temperament. It thrives in planted community tanks with soft, warm water.",
+        "description": "The Electric Blue Ram is a striking freshwater cichlid known for its iridescent blue body and peaceful temperament. It thrives in planted community tanks with soft, warm water.",
         "image": "images/ram-cichlid.png"
     },
     {
@@ -65,7 +65,7 @@ const fishes = [
         "region": "saltwater",
         "length_cm": "9 cm",
         "price": "30.00",
-        "info": "Made famous by its bright orange and white stripes, the Clownfish is hardy, social, and forms symbiotic relationships with anemones, making it a favorite among marine hobbyists.",
+        "description": "Made famous by its bright orange and white stripes, the Clownfish is hardy, social, and forms symbiotic relationships with anemones, making it a favorite among marine hobbyists.",
         "image": "images/clownfish.png"
     },
     {
@@ -75,7 +75,7 @@ const fishes = [
         "region": "freshwater",
         "length_cm": "7 cm",
         "price": "20.00",
-        "info": "This dwarf cichlid from the Amazon Basin displays shimmering blue and yellow hues. It’s ideal for planted tanks and known for its intelligent, curious behavior.",
+        "description": "This dwarf cichlid from the Amazon Basin displays shimmering blue and yellow hues. It’s ideal for planted tanks and known for its intelligent, curious behavior.",
         "image": "images/dwarf-cichlid.png"
     },
     {
@@ -85,7 +85,7 @@ const fishes = [
         "region": "saltwater",
         "length_cm": "8 cm",
         "price": "40.00",
-        "info": "The Bangaii Cardinalfish is a peaceful, slow-swimming reef species with bold black-and-silver stripes. It is easy to breed in captivity and great for small community aquariums.",
+        "description": "The Bangaii Cardinalfish is a peaceful, slow-swimming reef species with bold black-and-silver stripes. It is easy to breed in captivity and great for small community aquariums.",
         "image": "images/cardinalfish.png"
     },
     {
@@ -95,7 +95,7 @@ const fishes = [
         "region": "freshwater",
         "length_cm": "10 cm",
         "price": "18.00",
-        "info": "The Boesemani Rainbowfish is a freshwater favorite known for its split coloration—blue in the front and orange in the rear. It’s active, hardy, and a great centerpiece for planted tanks.",
+        "description": "The Boesemani Rainbowfish is a freshwater favorite known for its split coloration—blue in the front and orange in the rear. It’s active, hardy, and a great centerpiece for planted tanks.",
         "image": "images/rainbowfish.png"
     }
 ];
