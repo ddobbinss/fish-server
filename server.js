@@ -132,6 +132,48 @@ app.post("/api/fishes", upload.single("image"), (req, res) => {
     res.status(200).send(fish);
 });
 
+app.put("/api/fish/:id", upload.single("image"), (req, res) => {
+
+    const fish = fishes.find((fish) => fish._id == parseInt(req.params.id));
+
+    if(!fish) {
+        return res.status(404).send("The fish with the given ID was not found.");
+    }
+
+    const isValidUpdate = validateFish(req.body);
+
+    if(isValidUpdate.error) {
+        console.log("invalid info");
+        res.status(400).send(isValidUpdate.error.details[0].message);
+        return;
+    }
+
+    fish.name = req.body.name;
+    fish.species = req.body.species;
+    fish.region = req.body.region;
+    fish.price = req.body.price;
+    fish.description = req.body.description;
+
+    if(req.file) {
+        fish.image = "images/" + req.file.filename;
+    }
+
+    res.status(200).send(fish);
+
+});
+
+app.delete("/api/fish/:id", (req, res) => {
+    const fish = fishes.find((fish) => fish._id == parseInt(req.params.id));
+
+    if(!fish) {
+        return res.status(404).send("The fish with the given ID was not found.");
+    }
+
+    const index = fishes.indexOf(fish);
+    fishes.splice(index, 1);
+    res.status(200).send(fish);
+});
+
 
 const validateFish = (fish) => {
 
