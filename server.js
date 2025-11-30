@@ -95,17 +95,17 @@ const fishes = [
 ];
 
 
-app.get("/api/fishes", (req, res) => {
+app.get("/api/fishes/", (req, res) => {
     console.log("Fish Requested");
     res.send(fishes);
 }); 
 
-app.get("/api/fish/:id", (req, res) => {
+app.get("/api/fishes/:id", (req, res) => {
     const fish = fishes.find((fish) => fish._id == parseInt(req.params.id));
     res.send(fish);
 });
 
-app.post("/api/fishes", upload.single("image"), (req, res) => {
+app.post("/api/fishes", upload.single("img"), (req, res) => {
     console.log("in post request");
     const result = validateFish(req.body);
 
@@ -125,14 +125,14 @@ app.post("/api/fishes", upload.single("image"), (req, res) => {
     };
 
     if(req.file) {
-        fish.image = "images/" + req.file.filename;
+        fish.image = req.file.filename;
     }
 
     fishes.push(fish);
     res.status(200).send(fish);
 });
 
-app.put("/api/fish/:id", upload.single("image"), (req, res) => {
+app.put("/api/fishes/:id", upload.single("img"), (req, res) => {
 
     const fish = fishes.find((fish) => fish._id == parseInt(req.params.id));
 
@@ -162,7 +162,7 @@ app.put("/api/fish/:id", upload.single("image"), (req, res) => {
 
 });
 
-app.delete("/api/fish/:id", (req, res) => {
+app.delete("/api/fishes/:id", (req, res) => {
     const fish = fishes.find((fish) => fish._id == parseInt(req.params.id));
 
     if(!fish) {
