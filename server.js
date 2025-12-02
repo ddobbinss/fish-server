@@ -193,3 +193,4 @@ const validateFish = (fish) => {
 app.listen(3001, () => {
     console.log("Server is up and running");
 });
+
