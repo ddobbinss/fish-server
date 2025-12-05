@@ -131,8 +131,8 @@ app.get("/api/fishes/:id", async (req, res) => {
     res.send(fish);
 });
 
-app.post("/api/fishes", upload.single("img"), async(req, res) => {
-    console.log("in post request:" + req.body);
+app.post("/api/fishes", upload.single("image"), async(req, res) => {
+    console.log("in post request:");
     const isValidFish = validateFish(req.body);
 
     if(isValidFish.error) {
