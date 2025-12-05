@@ -21,7 +21,7 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});  
 
 mongoose
-   .connect("mongodb+srv://ddobbins:4VdPZWOPh4z6ydYt@cluster0.h1okiq2.mongodb.net/?appName=Cluster0")
+   .connect("mongodb+srv://ddobbins:4VdPZWOPh4z6ydYt@cluster0.h1okiq2.mongodb.net/**fish_store**?appName=Cluster0")
    .then(() => console.log("Connected to mongodb..."))
    .catch((err) => console.error("could not connect ot mongodb...", err));
     
