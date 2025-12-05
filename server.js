@@ -6,6 +6,8 @@ const app = express();
 app.use(express.static('public'));
 app.use(express.json());
 app.use(cors());
+const mongoose = require("mongoose");
+
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{
@@ -18,6 +20,26 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});  
 
+mongoose
+    mongoose
+      .connect("mongodb+srv://ddobbins:4VdPZWOPh4z6ydYt@cluster0.h1okiq2.mongodb.net/?appName=Cluster0")
+      .then(() => console.log("Connected to mongodb..."))
+      .catch((err) => console.error("could not connect ot mongodb...", err));
+    
+    const fishSchema = new mongoose.Schema({
+      name: String,
+      species: String,
+      region: String,
+      length_cm: Number,
+      price: Number,
+      info: String,   
+      image: String,
+    });
+
+    const Fish = mongoose.model("Fish", fishSchema);
+
+
+/*
 const fishes = [
         {
         "_id": 1,
@@ -94,9 +116,10 @@ const fishes = [
     }
 ];
 
-
-app.get("/api/fishes/", (req, res) => {
+*/
+app.get("/api/fishes/", async(req, res) => {
     console.log("Fish Requested");
+    const fishes = await Fish.find();
     res.send(fishes);
 }); 
 
@@ -105,40 +128,33 @@ app.get("/api/fishes/:id", (req, res) => {
     res.send(fish);
 });
 
-app.post("/api/fishes", upload.single("img"), (req, res) => {
-    console.log("in post request");
-    const result = validateFish(req.body);
+app.post("/api/fishes", upload.single("img"), async(req, res) => {
+    console.log("in post request:" + req.body);
+    const isValidFish = validateFish(req.body);
 
-    if(result.error) {
+    if(isValidFish.error) {
           console.log("Validation error:", result.error.details[0].message);
-          console.log("Body received:", req.body);
           return res.status(400).send(result.error.details[0].message);
+          return;
     }
 
-    const fish = {
-        _id: fishes.length + 1,
+    const fish = new Fish({
         name: req.body.name,
         species: req.body.species,
         region: req.body.region,
         price: req.body.price,
         description: req.body.description,
-    };
+    });
 
     if(req.file) {
         fish.image = req.file.filename;
     }
 
-    fishes.push(fish);
-    res.status(200).send(fish);
+    const newFish = await fish.save();
+    res.status(200).send(newFish);
 });
 
-app.put("/api/fishes/:id", upload.single("img"), (req, res) => {
-
-    const fish = fishes.find((fish) => fish._id == parseInt(req.params.id));
-
-    if(!fish) {
-        return res.status(404).send("The fish with the given ID was not found.");
-    }
+app.put("/api/fishes/:id", upload.single("img"), async(req, res) => {
 
     const isValidUpdate = validateFish(req.body);
 
@@ -148,29 +164,37 @@ app.put("/api/fishes/:id", upload.single("img"), (req, res) => {
         return;
     }
 
-    fish.name = req.body.name;
-    fish.species = req.body.species;
-    fish.region = req.body.region;
-    fish.price = req.body.price;
-    fish.description = req.body.description;
+    const fieldsToUpdate = {
+        name: req.body.name,
+        species: req.body.species,
+        region: req.body.region,
+        price: req.body.price,
+        description: req.body.description,
+    };
 
     if(req.file) {
-        fish.image = "images/" + req.file.filename;
+        fieldsToUpdate.image = req.file.filename;
     }
 
+    const success = await Fish.updateOne({_id: req.params.id}, fieldsToUpdate);
+
+    if(!success) {
+        res.status(404).send("The fish with the given ID was not found.");
+        return;
+    }
+
+    const fish = await Fish.findById(req.params.id);
     res.status(200).send(fish);
 
 });
 
-app.delete("/api/fishes/:id", (req, res) => {
-    const fish = fishes.find((fish) => fish._id == parseInt(req.params.id));
+app.delete("/api/fishes/:id", async(req, res) => {
+    const fish = await Fish.findByIdAndDelete(req.params.id);
 
     if(!fish) {
         return res.status(404).send("The fish with the given ID was not found.");
     }
 
-    const index = fishes.indexOf(fish);
-    fishes.splice(index, 1);
     res.status(200).send(fish);
 });
 
