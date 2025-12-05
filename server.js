@@ -21,18 +21,16 @@ const storage = multer.diskStorage({
 const upload = multer({storage: storage});  
 
 mongoose
-    mongoose
-      .connect("mongodb+srv://ddobbins:4VdPZWOPh4z6ydYt@cluster0.h1okiq2.mongodb.net/?appName=Cluster0")
-      .then(() => console.log("Connected to mongodb..."))
-      .catch((err) => console.error("could not connect ot mongodb...", err));
+   .connect("mongodb+srv://ddobbins:4VdPZWOPh4z6ydYt@cluster0.h1okiq2.mongodb.net/?appName=Cluster0")
+   .then(() => console.log("Connected to mongodb..."))
+   .catch((err) => console.error("could not connect ot mongodb...", err));
     
     const fishSchema = new mongoose.Schema({
       name: String,
       species: String,
       region: String,
-      length_cm: Number,
       price: Number,
-      info: String,   
+      description: String,   
       image: String,
     });
 
@@ -123,8 +121,13 @@ app.get("/api/fishes/", async(req, res) => {
     res.send(fishes);
 }); 
 
-app.get("/api/fishes/:id", (req, res) => {
-    const fish = fishes.find((fish) => fish._id == parseInt(req.params.id));
+app.get("/api/fishes/:id", async (req, res) => {
+
+    const fish = await Fish.findById(req.params.id);
+    
+    if (!fish) {
+        return res.status(404).send("The fish with the given ID was not found.");
+    }
     res.send(fish);
 });
 
@@ -135,7 +138,6 @@ app.post("/api/fishes", upload.single("img"), async(req, res) => {
     if(isValidFish.error) {
           console.log("Validation error:", result.error.details[0].message);
           return res.status(400).send(result.error.details[0].message);
-          return;
     }
 
     const fish = new Fish({
@@ -176,14 +178,14 @@ app.put("/api/fishes/:id", upload.single("img"), async(req, res) => {
         fieldsToUpdate.image = req.file.filename;
     }
 
-    const success = await Fish.updateOne({_id: req.params.id}, fieldsToUpdate);
+   
+    const fish = await Fish.findByIdAndUpdate(req.params.id, fieldsToUpdate, {new: true });
 
-    if(!success) {
+    if(!fish) {
         res.status(404).send("The fish with the given ID was not found.");
         return;
     }
 
-    const fish = await Fish.findById(req.params.id);
     res.status(200).send(fish);
 
 });
