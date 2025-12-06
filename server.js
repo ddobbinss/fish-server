@@ -156,7 +156,7 @@ app.post("/api/fishes", upload.single("image"), async(req, res) => {
     res.status(200).send(newFish);
 });
 
-app.put("/api/fishes/:id", upload.single("img"), async(req, res) => {
+app.put("/api/fishes/:id", upload.single("image"), async(req, res) => {
 
     const isValidUpdate = validateFish(req.body);
 
